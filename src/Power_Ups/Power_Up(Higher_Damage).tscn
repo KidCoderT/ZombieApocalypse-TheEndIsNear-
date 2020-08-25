@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/Power_Ups/PowerUp(Faster_Shots).tscn" type="PackedScene" id=1]
+
+[node name="Power_Up(Higher_Damage)" instance=ExtResource( 1 )]
+modulate = Color( 0.603922, 0.0705882, 0.847059, 1 )
+power_up_name = "higher_damage"
+variables_name_in_player_for_changing = "damage"
+player_variables_value_for_change = 5.0

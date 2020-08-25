@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/Player/Player.gd" type="Script" id=2]
+[ext_resource path="res://assets/charectors/Player(Shooting).png" type="Texture" id=4]
+[ext_resource path="res://assets/charectors/Player(Normal).png" type="Texture" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 7.97801, 8.08962 )
+
+[node name="Player" type="Sprite"]
+scale = Vector2( 1.95885, 1.95885 )
+script = ExtResource( 2 )
+images = [ ExtResource( 5 ), ExtResource( 4 ) ]
+
+[node name="Hitbox" type="Area2D" parent="." groups=[
+"Player",
+]]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource( 1 )
+
+[node name="Reload_Timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="PowerUpCoolDownTimer" type="Timer" parent="."]
+one_shot = true
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
+[connection signal="timeout" from="Reload_Timer" to="." method="_on_Reload_Timer_timeout"]
+[connection signal="timeout" from="PowerUpCoolDownTimer" to="." method="_on_PowerUpCoolDownTimer_timeout"]

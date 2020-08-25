@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/charectors/Square.png" type="Texture" id=1]
+[ext_resource path="res://src/Player/Bullet.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8.02411, 8.01019 )
+
+[node name="Bullet" type="Sprite"]
+modulate = Color( 0.776471, 0.815686, 0.0705882, 1 )
+scale = Vector2( 1.05456, 0.50186 )
+z_index = -2
+texture = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+modulate = Color( 0.701961, 0.737255, 0.266667, 1 )
+position = Vector2( 0.0596355, 0.00475287 )
+scale = Vector2( 0.796241, 0.800569 )
+
+[node name="Hitbox" type="Area2D" parent="." groups=[
+"Bullet",
+]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2( -0.0164299, -0.0237417 )
+shape = SubResource( 1 )
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

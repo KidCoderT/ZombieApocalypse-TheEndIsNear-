@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/cure.wav-3533d87e300a95b3e4b1d46c6190df29.sample"
+
+[deps]
+
+source_file="res://assets/sounds/cure.wav"
+dest_files=[ "res://.import/cure.wav-3533d87e300a95b3e4b1d46c6190df29.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
