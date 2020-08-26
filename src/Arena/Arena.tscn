@@ -1,7 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=14 format=2]
 
+[ext_resource path="res://src/Arena/Arena.gd" type="Script" id=1]
+[ext_resource path="res://src/Power_Ups/PowerUp(Faster_Shots).tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/Player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/Power_Ups/Power_Up(Higher_Damage).tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/Enemies/BasicEnemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/Enemies/FastEnemy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/Arena/ScoreLabel.gd" type="Script" id=7]
+[ext_resource path="res://src/Enemies/StrongEnemy.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/Arena/HighScoreLabel.gd" type="Script" id=9]
 
 [sub_resource type="Environment" id=1]
@@ -25,6 +31,9 @@ size = 58
 font_data = SubResource( 2 )
 
 [node name="Arena" type="Node2D"]
+script = ExtResource( 1 )
+enemies = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 8 ) ]
+power_ups = [ ExtResource( 2 ), ExtResource( 4 ) ]
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 326.501, 151.361 )
@@ -89,6 +98,10 @@ script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 321.026, 169.706 )
+current = true
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_EnemySpawnTimer_timeout"]
 [connection signal="timeout" from="DifficultyTimer" to="." method="_on_DifficultyTimer_timeout"]
 [connection signal="timeout" from="PowerUpSpawnTimer" to="." method="_on_PowerUpsSpawnTimer_timeout"]
