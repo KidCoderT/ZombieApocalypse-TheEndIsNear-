@@ -4,6 +4,7 @@ export (int) var speed = 75
 export (int) var health = 3
 export (int) var points = 10
 export (int) var knock_back = 600
+export (int) var damage_to_player = 10
 
 var i_am_stun = false
 var velocity = Vector2()
@@ -46,6 +47,11 @@ func _on_Hitbox_area_entered(area):
 				blood_particle_instance.modulate = Color.from_hsv(current_color.h, 0.75, current_color.v)
 			
 			queue_free()
+	elif area.is_in_group("Player"):
+		velocity *= -1 * knock_back
+		$Stun_Timer.start()
+		i_am_stun = true
+	
 
 func _on_Stun_Timer_timeout():
 	modulate = current_color

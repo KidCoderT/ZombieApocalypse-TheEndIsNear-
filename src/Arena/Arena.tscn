@@ -58,10 +58,10 @@ position = Vector2( -3.05176e-05, -1.52588e-05 )
 z_index = 20
 
 [node name="Control" type="Control" parent="UI"]
-margin_left = -5.26605
-margin_top = 5.34537
-margin_right = 634.734
-margin_bottom = 365.345
+margin_left = 1.08356
+margin_top = -2.59163
+margin_right = 641.084
+margin_bottom = 357.408
 __meta__ = {
 "_edit_use_anchors_": false
 }
