@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://src/Arena/Arena.gd" type="Script" id=1]
 [ext_resource path="res://src/Power_Ups/PowerUp(Faster_Shots).tscn" type="PackedScene" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://src/Enemies/BasicEnemy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/Enemies/FastEnemy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/Arena/ScoreLabel.gd" type="Script" id=7]
-[ext_resource path="res://src/Enemies/StrongEnemy.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/Arena/HighScoreLabel.gd" type="Script" id=9]
 
 [sub_resource type="Environment" id=1]
@@ -32,7 +31,7 @@ font_data = SubResource( 2 )
 
 [node name="Arena" type="Node2D"]
 script = ExtResource( 1 )
-enemies = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 8 ) ]
+enemies = [ ExtResource( 5 ), ExtResource( 6 ) ]
 power_ups = [ ExtResource( 2 ), ExtResource( 4 ) ]
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
