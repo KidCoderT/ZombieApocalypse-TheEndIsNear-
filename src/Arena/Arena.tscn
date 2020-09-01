@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://src/Arena/Arena.gd" type="Script" id=1]
 [ext_resource path="res://src/Power_Ups/PowerUp(Faster_Shots).tscn" type="PackedScene" id=2]
@@ -7,27 +7,29 @@
 [ext_resource path="res://src/Enemies/BasicEnemy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/Enemies/FastEnemy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/Arena/ScoreLabel.gd" type="Script" id=7]
+[ext_resource path="res://src/Arena/HealthBar.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/Arena/HighScoreLabel.gd" type="Script" id=9]
+[ext_resource path="res://assets/UI/label_HP_bg.png" type="Texture" id=10]
+[ext_resource path="res://assets/charectors/Player(Normal).png" type="Texture" id=11]
+[ext_resource path="res://assets/weapons/3.png" type="Texture" id=12]
 
-[sub_resource type="Environment" id=1]
-background_mode = 4
-glow_enabled = true
-glow_intensity = 0.08
-glow_strength = 1.16
-glow_bloom = 0.63
-glow_blend_mode = 0
-glow_bicubic_upscale = true
-
-[sub_resource type="DynamicFontData" id=2]
+[sub_resource type="DynamicFontData" id=1]
 font_path = "res://assets/fonts/Font.ttf"
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=2]
 size = 90
-font_data = SubResource( 2 )
+font_data = SubResource( 1 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=3]
 size = 58
-font_data = SubResource( 2 )
+font_data = SubResource( 1 )
+
+[sub_resource type="Environment" id=4]
+background_mode = 4
+glow_enabled = true
+glow_bloom = 0.27
+glow_blend_mode = 0
+glow_bicubic_upscale = true
 
 [node name="Arena" type="Node2D"]
 script = ExtResource( 1 )
@@ -36,9 +38,6 @@ power_ups = [ ExtResource( 2 ), ExtResource( 4 ) ]
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 326.501, 151.361 )
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 1 )
 
 [node name="EnemySpawnTimer" type="Timer" parent="."]
 wait_time = 3.0
@@ -56,16 +55,61 @@ autostart = true
 position = Vector2( -3.05176e-05, -1.52588e-05 )
 z_index = 20
 
-[node name="Control" type="Control" parent="UI"]
-margin_left = 1.08356
-margin_top = -2.59163
-margin_right = 641.084
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 321.026, 169.706 )
+current = true
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="PlayerItems" type="Control" parent="HUD"]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerLivesBG" type="Sprite" parent="HUD/PlayerItems"]
+position = Vector2( 43.0869, 59.518 )
+scale = Vector2( 0.537582, 0.551386 )
+texture = ExtResource( 10 )
+
+[node name="PlayerGunsBG" type="Sprite" parent="HUD/PlayerItems"]
+position = Vector2( 113.642, 58.8881 )
+scale = Vector2( 0.537582, 0.551386 )
+texture = ExtResource( 10 )
+
+[node name="PlayerImages" type="Sprite" parent="HUD/PlayerItems"]
+position = Vector2( 25.634, 59.389 )
+texture = ExtResource( 11 )
+
+[node name="PlayerLives" type="Label" parent="HUD/PlayerItems"]
+margin_left = 40.7068
+margin_top = 53.9391
+margin_right = 80.7068
+margin_bottom = 67.9391
+text = "x 3"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WeaponImage" type="Sprite" parent="HUD/PlayerItems"]
+position = Vector2( 113.394, 59.0696 )
+texture = ExtResource( 12 )
+
+[node name="HealthBar" parent="HUD" instance=ExtResource( 8 )]
+margin_left = 10.1187
+margin_top = 11.1342
+margin_right = 215.119
+margin_bottom = 46.1342
+
+[node name="Score&HighScore" type="Control" parent="HUD"]
+margin_left = 1.4581
+margin_top = -2.59165
+margin_right = 641.459
 margin_bottom = 357.408
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ScoreLabel" type="Label" parent="UI/Control"]
+[node name="ScoreLabel" type="Label" parent="HUD/Score&HighScore"]
 anchor_left = -2.98023e-09
 anchor_top = 0.00467165
 anchor_bottom = 0.00467165
@@ -74,7 +118,7 @@ margin_top = 247.993
 margin_right = 659.925
 margin_bottom = 391.993
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
 valign = 1
 uppercase = true
 script = ExtResource( 7 )
@@ -82,7 +126,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HighScoreLabel" type="Label" parent="UI/Control"]
+[node name="HighScoreLabel" type="Label" parent="HUD/Score&HighScore"]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 11.9249
@@ -90,7 +134,7 @@ margin_top = -65.3554
 margin_right = 594.925
 margin_bottom = 33.6446
 rect_scale = Vector2( 0.5, 0.5 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 valign = 1
 uppercase = true
 script = ExtResource( 9 )
@@ -98,9 +142,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 321.026, 169.706 )
-current = true
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 4 )
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_EnemySpawnTimer_timeout"]
 [connection signal="timeout" from="DifficultyTimer" to="." method="_on_DifficultyTimer_timeout"]
 [connection signal="timeout" from="PowerUpSpawnTimer" to="." method="_on_PowerUpsSpawnTimer_timeout"]

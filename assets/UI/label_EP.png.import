@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/heart.svg-9850746fc6f8186dffab0184e902ed39.stex"
+path="res://.import/label_EP.png-09587e498dab84686d5a1f484c581a7f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/health bar/heart.svg"
-dest_files=[ "res://.import/heart.svg-9850746fc6f8186dffab0184e902ed39.stex" ]
+source_file="res://assets/UI/label_EP.png"
+dest_files=[ "res://.import/label_EP.png-09587e498dab84686d5a1f484c581a7f.stex" ]
 
 [params]
 

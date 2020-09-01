@@ -1,9 +1,12 @@
 extends Sprite
+signal health_updated(health)
+signal killed()
 
 export (int) var damage = 1
 export (int) var speed = 200
 export (Array, Texture) var images
 export (float) var shooting_reload_speed = 0.1
+export (float) var max_health = 100
 
 var can_fire := true
 var is_dead := false
@@ -14,6 +17,8 @@ var default_shooting_reload_speed = shooting_reload_speed
 var bullet = preload("res://src/Player/Bullet.tscn")
 var power_ups_for_reseting = []
 
+onready var health = max_health setget _set_health
+
 func _ready():
 	GlobalScript.player = self
 
@@ -21,6 +26,7 @@ func _exit_tree():
 	GlobalScript.player = null
 
 func _process(delta):
+	print(health)
 	velocity.x = int(Input.is_action_pressed("Right")) - int(Input.is_action_pressed("Left"))
 	velocity.y = int(Input.is_action_pressed("Down")) - int(Input.is_action_pressed("Up"))
 	
@@ -53,12 +59,12 @@ func _on_Reload_Timer_timeout():
 		texture_number = 0
 
 func _on_Hitbox_area_entered(area):
-	if area.is_in_group("Enemy"):
-		visible = false
-		is_dead = true
-		yield(get_tree().create_timer(1), "timeout")
-		GlobalScript.save_game_data()
-		get_tree().reload_current_scene()
+	if area.is_in_group("Enemy") and $InvulnerabilityTimer.is_stopped():
+		$InvulnerabilityTimer.start()
+		_set_health(health - 10)
+		texture_number = 2
+		$PlayerEffectsAnimations.play("damage")
+		$PlayerEffectsAnimations.play("flash")
 
 func _on_PowerUpCoolDownTimer_timeout():
 	if power_ups_for_reseting.find("faster_reloading") != null:
@@ -67,3 +73,22 @@ func _on_PowerUpCoolDownTimer_timeout():
 	if power_ups_for_reseting.find("higher_damage") != null:
 		damage = default_damage
 		power_ups_for_reseting.erase("higher_damage")
+
+func player_has_been_killed():
+	visible = false
+	is_dead = true
+	GlobalScript.save_game_data()
+	get_tree().reload_current_scene()
+
+func _set_health(value):
+	var prev_health = health
+	health = clamp(value, 0, max_health)
+	if health != prev_health:
+		emit_signal("health_updated", health)
+		if health <= 0:
+			player_has_been_killed()
+			emit_signal("killed")
+
+func _on_InvulnerabilityTimer_timeout():
+	$PlayerEffectsAnimations.play("rest")
+	texture_number = 0

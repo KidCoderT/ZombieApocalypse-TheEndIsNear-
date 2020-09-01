@@ -6,6 +6,7 @@ export (Array, PackedScene) var power_ups
 func _ready():
 	GlobalScript.node_creation_parent = self
 	GlobalScript.score = 0
+	$Player.connect("health_updated", $HUD/HealthBar, "_on_health_updated")
 
 func _exit_tree():
 	GlobalScript.node_creation_parent = self
@@ -17,7 +18,8 @@ func _on_EnemySpawnTimer_timeout():
 		random_enemy_position = Vector2(rand_range(-160, 670), rand_range(-90, 390))
 	
 	var enemy_number = round(rand_range(0, enemies.size() - 1))
-	GlobalScript.instancing_node(enemies[enemy_number], random_enemy_position, self)
+	var enemy_instance = GlobalScript.instancing_node(enemies[enemy_number], random_enemy_position, self)
+	enemy_instance.z_index = -2
 
 func _on_DifficultyTimer_timeout():
 	if $EnemySpawnTimer.wait_time > 0.5:

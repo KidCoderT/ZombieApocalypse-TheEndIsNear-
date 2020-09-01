@@ -3,7 +3,7 @@ extends Sprite
 export (String) var power_up_name
 export (String) var variables_name_in_player_for_changing
 export (float) var player_variables_value_for_change
-export (float) var duration 	
+export (float) var duration
 
 func _on_Area2D_area_entered(area):
 	if area.is_in_group("Player"):
