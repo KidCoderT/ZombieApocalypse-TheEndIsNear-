@@ -35,7 +35,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "FileSystemView", "godot-git-control.funabab" )
+enabled=PoolStringArray( "FileSystemView", "FontAwesome5", "godot-git-control.funabab", "terminal" )
 
 [input]
 

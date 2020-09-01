@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://src/Arena/Arena.gd" type="Script" id=1]
 [ext_resource path="res://src/Power_Ups/PowerUp(Faster_Shots).tscn" type="PackedScene" id=2]
@@ -12,6 +12,10 @@
 [ext_resource path="res://assets/UI/label_HP_bg.png" type="Texture" id=10]
 [ext_resource path="res://assets/charectors/Player(Normal).png" type="Texture" id=11]
 [ext_resource path="res://assets/weapons/3.png" type="Texture" id=12]
+[ext_resource path="res://assets/fonts/Font.ttf" type="DynamicFontData" id=13]
+[ext_resource path="res://addons/FontAwesome5/FontAwesome.gd" type="Script" id=14]
+[ext_resource path="res://addons/FontAwesome5/fa-solid-900.ttf" type="DynamicFontData" id=15]
+[ext_resource path="res://assets/charectors/Enemy 1.png" type="Texture" id=16]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://assets/fonts/Font.ttf"
@@ -23,6 +27,15 @@ font_data = SubResource( 1 )
 [sub_resource type="DynamicFont" id=3]
 size = 58
 font_data = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=5]
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=6]
+font_data = ExtResource( 15 )
+
+[sub_resource type="DynamicFont" id=7]
+font_data = ExtResource( 15 )
 
 [sub_resource type="Environment" id=4]
 background_mode = 4
@@ -61,20 +74,32 @@ current = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="PlayerItems" type="Control" parent="HUD"]
+[node name="BG" type="Control" parent="HUD"]
+margin_right = 40.0
+margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayerLivesBG" type="Sprite" parent="HUD/PlayerItems"]
+[node name="PlayerLivesBG" type="Sprite" parent="HUD/BG"]
 position = Vector2( 43.0869, 59.518 )
 scale = Vector2( 0.537582, 0.551386 )
 texture = ExtResource( 10 )
 
-[node name="PlayerGunsBG" type="Sprite" parent="HUD/PlayerItems"]
+[node name="PlayerGunsBG" type="Sprite" parent="HUD/BG"]
 position = Vector2( 113.642, 58.8881 )
 scale = Vector2( 0.537582, 0.551386 )
 texture = ExtResource( 10 )
+
+[node name="ZombiesKilledBG" type="Sprite" parent="HUD/BG"]
+position = Vector2( 582.93, 309.78 )
+scale = Vector2( 0.8, 0.8 )
+texture = ExtResource( 10 )
+
+[node name="PlayerItems" type="Control" parent="HUD"]
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="PlayerImages" type="Sprite" parent="HUD/PlayerItems"]
 position = Vector2( 25.634, 59.389 )
@@ -94,6 +119,22 @@ __meta__ = {
 position = Vector2( 113.394, 59.0696 )
 texture = ExtResource( 12 )
 
+[node name="EnemyImage" type="Sprite" parent="HUD/PlayerItems"]
+position = Vector2( 558.061, 310.54 )
+scale = Vector2( 0.694884, 0.694884 )
+texture = ExtResource( 16 )
+
+[node name="ZombiesKilled" type="Label" parent="HUD/PlayerItems"]
+margin_left = 577.703
+margin_top = 300.968
+margin_right = 617.703
+margin_bottom = 314.968
+rect_scale = Vector2( 1.5, 1.5 )
+text = "x  0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="HealthBar" parent="HUD" instance=ExtResource( 8 )]
 margin_left = 10.1187
 margin_top = 11.1342
@@ -101,10 +142,10 @@ margin_right = 215.119
 margin_bottom = 46.1342
 
 [node name="Score&HighScore" type="Control" parent="HUD"]
-margin_left = 1.4581
-margin_top = -2.59165
-margin_right = 641.459
-margin_bottom = 357.408
+margin_left = -2.32162
+margin_top = 1.18812
+margin_right = 637.679
+margin_bottom = 361.188
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -141,6 +182,56 @@ script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="GamePlayUI" type="Control" parent="HUD"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PauseButton" type="Button" parent="HUD/GamePlayUI"]
+margin_left = 604.067
+margin_top = 9.68235
+margin_right = 631.067
+margin_bottom = 37.6824
+custom_fonts/font = SubResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FontAwesome" type="Label" parent="HUD/GamePlayUI/PauseButton"]
+margin_left = 5.87427
+margin_top = 5.25513
+margin_right = 20.8743
+margin_bottom = 21.2551
+custom_fonts/font = SubResource( 6 )
+text = ""
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+icon_name = "pause"
+
+[node name="ExitButton" type="Button" parent="HUD/GamePlayUI"]
+margin_left = 605.402
+margin_top = 43.0352
+margin_right = 632.402
+margin_bottom = 71.0352
+custom_fonts/font = SubResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FontAwesome" type="Label" parent="HUD/GamePlayUI/ExitButton"]
+margin_left = 5.49304
+margin_top = 6.03075
+margin_right = 21.493
+margin_bottom = 22.0307
+custom_fonts/font = SubResource( 7 )
+text = ""
+script = ExtResource( 14 )
+icon_name = "sign-out-alt"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 4 )

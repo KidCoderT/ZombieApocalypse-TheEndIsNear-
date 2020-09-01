@@ -26,7 +26,6 @@ func _exit_tree():
 	GlobalScript.player = null
 
 func _process(delta):
-	print(health)
 	velocity.x = int(Input.is_action_pressed("Right")) - int(Input.is_action_pressed("Left"))
 	velocity.y = int(Input.is_action_pressed("Down")) - int(Input.is_action_pressed("Up"))
 	
