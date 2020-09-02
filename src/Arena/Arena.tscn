@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://src/Arena/Arena.gd" type="Script" id=1]
 [ext_resource path="res://src/Power_Ups/PowerUp(Faster_Shots).tscn" type="PackedScene" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://addons/FontAwesome5/FontAwesome.gd" type="Script" id=14]
 [ext_resource path="res://addons/FontAwesome5/fa-solid-900.ttf" type="DynamicFontData" id=15]
 [ext_resource path="res://assets/charectors/Enemy 1.png" type="Texture" id=16]
+[ext_resource path="res://src/Arena/PauseScreen.gd" type="Script" id=17]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://assets/fonts/Font.ttf"
@@ -28,18 +29,56 @@ font_data = SubResource( 1 )
 size = 58
 font_data = SubResource( 1 )
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=4]
 font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=5]
+font_data = ExtResource( 15 )
 
 [sub_resource type="DynamicFont" id=6]
 font_data = ExtResource( 15 )
 
 [sub_resource type="DynamicFont" id=7]
+size = 70
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 90
 font_data = ExtResource( 15 )
 
-[sub_resource type="Environment" id=4]
+[sub_resource type="Animation" id=10]
+resource_name = "ShockWave"
+length = 2.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.6, 0.65, 0.7, 0.75, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.984314, 0.984314, 0.984314, 0 ), Color( 0.984314, 0.984314, 0.984314, 0.0705882 ), Color( 0.984314, 0.984314, 0.984314, 0.180392 ), Color( 0.984314, 0.984314, 0.984314, 0.301961 ), Color( 0.984314, 0.984314, 0.984314, 0.47451 ), Color( 0.984314, 0.984314, 0.984314, 0.709804 ), Color( 0.984314, 0.984314, 0.984314, 0.831373 ), Color( 0.984314, 0.984314, 0.984314, 0.952941 ), Color( 0.984314, 0.984314, 0.984314, 1 ), Color( 0.984314, 0.984314, 0.984314, 0.776471 ), Color( 0.984314, 0.984314, 0.984314, 0.627451 ), Color( 0.984314, 0.984314, 0.984314, 0.643137 ), Color( 0.984314, 0.984314, 0.984314, 0.4 ), Color( 0.984314, 0.984314, 0.984314, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../../Player:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 1.7, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Environment" id=9]
 background_mode = 4
 glow_enabled = true
+glow_intensity = 2.4
 glow_bloom = 0.27
 glow_blend_mode = 0
 glow_bicubic_upscale = true
@@ -96,20 +135,32 @@ position = Vector2( 582.93, 309.78 )
 scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 10 )
 
+[node name="Images" type="Control" parent="HUD"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerImages" type="Sprite" parent="HUD/Images"]
+position = Vector2( 27.8436, 59.389 )
+texture = ExtResource( 11 )
+
+[node name="EnemyImage" type="Sprite" parent="HUD/Images"]
+position = Vector2( 558.061, 310.54 )
+scale = Vector2( 0.694884, 0.694884 )
+texture = ExtResource( 16 )
+
 [node name="PlayerItems" type="Control" parent="HUD"]
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayerImages" type="Sprite" parent="HUD/PlayerItems"]
-position = Vector2( 25.634, 59.389 )
-texture = ExtResource( 11 )
-
 [node name="PlayerLives" type="Label" parent="HUD/PlayerItems"]
-margin_left = 40.7068
-margin_top = 53.9391
-margin_right = 80.7068
-margin_bottom = 67.9391
+margin_left = 42.9654
+margin_top = 52.6028
+margin_right = 82.9654
+margin_bottom = 66.6028
 text = "x 3"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -118,11 +169,6 @@ __meta__ = {
 [node name="WeaponImage" type="Sprite" parent="HUD/PlayerItems"]
 position = Vector2( 113.394, 59.0696 )
 texture = ExtResource( 12 )
-
-[node name="EnemyImage" type="Sprite" parent="HUD/PlayerItems"]
-position = Vector2( 558.061, 310.54 )
-scale = Vector2( 0.694884, 0.694884 )
-texture = ExtResource( 16 )
 
 [node name="ZombiesKilled" type="Label" parent="HUD/PlayerItems"]
 margin_left = 577.703
@@ -195,7 +241,7 @@ margin_left = 604.067
 margin_top = 9.68235
 margin_right = 631.067
 margin_bottom = 37.6824
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -205,7 +251,7 @@ margin_left = 5.87427
 margin_top = 5.25513
 margin_right = 20.8743
 margin_bottom = 21.2551
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 5 )
 text = ""
 script = ExtResource( 14 )
 __meta__ = {
@@ -218,7 +264,7 @@ margin_left = 605.402
 margin_top = 43.0352
 margin_right = 632.402
 margin_bottom = 71.0352
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -228,13 +274,97 @@ margin_left = 5.49304
 margin_top = 6.03075
 margin_right = 21.493
 margin_bottom = 22.0307
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 6 )
 text = ""
 script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 icon_name = "sign-out-alt"
 
+[node name="PauseScreen" type="Control" parent="HUD"]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 17 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="HUD/PauseScreen"]
+light_mask = 24576
+margin_left = -1.0
+margin_top = -2.0
+margin_right = 641.0
+margin_bottom = 340.0
+color = Color( 0, 0, 0, 0.784314 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HUD/PauseScreen"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -223.5
+margin_top = -107.0
+margin_right = 223.5
+margin_bottom = -32.0
+custom_fonts/font = SubResource( 7 )
+text = "You Are Paused!!!!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Unpause" type="Button" parent="HUD/PauseScreen"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -89.0
+margin_top = 47.0
+margin_right = 89.0
+margin_bottom = 194.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FontAwesome" type="Label" parent="HUD/PauseScreen/Unpause"]
+margin_left = 50.5107
+margin_top = 25.8166
+margin_right = 129.511
+margin_bottom = 116.817
+custom_fonts/font = SubResource( 8 )
+text = ""
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+icon_size = 90
+icon_name = "play"
+
+[node name="ShockWave" type="Control" parent="HUD"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="HUD/ShockWave"]
+margin_left = -17.0
+margin_top = -9.0
+margin_right = 660.0
+margin_bottom = 350.0
+color = Color( 0.984314, 0.984314, 0.984314, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayShockwave" type="AnimationPlayer" parent="HUD/ShockWave"]
+anims/ShockWave = SubResource( 10 )
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 4 )
+environment = SubResource( 9 )
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_EnemySpawnTimer_timeout"]
 [connection signal="timeout" from="DifficultyTimer" to="." method="_on_DifficultyTimer_timeout"]
 [connection signal="timeout" from="PowerUpSpawnTimer" to="." method="_on_PowerUpsSpawnTimer_timeout"]

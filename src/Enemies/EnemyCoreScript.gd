@@ -56,6 +56,7 @@ func _on_Hitbox_area_entered(area):
 				blood_particle_instance.rotation = velocity.angle()
 				blood_particle_instance.modulate = Color.from_hsv(current_color.h, 0.75, current_color.v)
 			
+			get_parent().number_of_zombies_killed += 1
 			queue_free()
 		
 		$AnimationPlayer.play("healthshow")

@@ -1,6 +1,7 @@
 extends Sprite
-signal health_updated(health)
 signal killed()
+signal revive()
+signal health_updated(health)
 
 export (int) var damage = 1
 export (int) var speed = 200
@@ -8,6 +9,7 @@ export (Array, Texture) var images
 export (float) var shooting_reload_speed = 0.1
 export (float) var max_health = 100
 
+var lives = 3
 var can_fire := true
 var is_dead := false
 var texture_number = 0
@@ -21,6 +23,7 @@ onready var health = max_health setget _set_health
 
 func _ready():
 	GlobalScript.player = self
+	connect("killed", self, "check_if_revivable")
 
 func _exit_tree():
 	GlobalScript.player = null
@@ -61,7 +64,6 @@ func _on_Hitbox_area_entered(area):
 	if area.is_in_group("Enemy") and $InvulnerabilityTimer.is_stopped():
 		$InvulnerabilityTimer.start()
 		_set_health(health - 10)
-		texture_number = 2
 		$PlayerEffectsAnimations.play("damage")
 		$PlayerEffectsAnimations.play("flash")
 
@@ -85,9 +87,25 @@ func _set_health(value):
 	if health != prev_health:
 		emit_signal("health_updated", health)
 		if health <= 0:
-			player_has_been_killed()
+			lives -= 1
 			emit_signal("killed")
+		else:
+			texture_number = 2
+	
 
 func _on_InvulnerabilityTimer_timeout():
 	$PlayerEffectsAnimations.play("rest")
 	texture_number = 0
+
+func check_if_revivable():
+	if not lives < 0:
+		emit_signal("revive")
+		$InvulnerabilityTimer.start()
+		texture_number = 1
+		$PlayerEffectsAnimations.play("damage")
+		$PlayerEffectsAnimations.play("flash")
+		health = max_health
+		emit_signal("health_updated", health)
+		
+	elif lives < 0:
+		player_has_been_killed()
